@@ -9,7 +9,8 @@ function Home() {
     const navigate = useNavigate()
 
     // URL later from Render when we deploy.
-    const URL = 'http://localhost:3000'
+    const URL = import.meta.env.VITE_API_URL
+    console.log(URL)
 
     useEffect(() => {
         async function getPolls() {
