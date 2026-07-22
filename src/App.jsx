@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import {Routes, Route} from 'react-router'
 import Home from './pages/Home'
-//import ViewPoll from './pages/ViewPoll'
 import Results from './pages/Results'
+import ViewPoll from './pages/ViewPoll'
 import NotFound from './pages/NotFound'
 import axios from 'axios'
 import './App.css'
@@ -14,6 +14,7 @@ function App() {
       <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/results/:id' element={<Results/>}/>
+          <Route path='/polls/:id' element={<ViewPoll/>}/>
           <Route path='*' element={<NotFound/>}/>
       </Routes>
     </>
