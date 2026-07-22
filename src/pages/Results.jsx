@@ -55,7 +55,7 @@ function Results(props) {
 
     return (
         <>
-            <Link to="/"> Back to Polls </Link>
+            <Link to="/">← Back to Polls </Link>
             <h2> Poll: {poll.title} </h2>
             <h3> Description: {poll.description} </h3>
             {poll.options.map((option) => {
