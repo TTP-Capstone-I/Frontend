@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 function PollCard(props) {
     const navigate = useNavigate()
@@ -7,7 +7,7 @@ function PollCard(props) {
     console.log(poll)
 
     function handleClick() {
-        console.log(`/polls/${poll.id}`)
+        navigate(`/polls/${poll.id}`)
         //useNavigate(`/polls/${poll.id}`)
     }
 
