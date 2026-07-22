@@ -17,10 +17,10 @@ function PollDetails(){
                 if (!response || !response.data) {
                     throw new Error("Failed to load poll")
                 }
-                // const data = await response.data
-                // if (!data) {
-                //     throw new Error("Failed to get polls")
-                // }
+                const data = await response.data
+                if (!data) {
+                    throw new Error("Failed to get polls")
+                }
                 setPoll(response.data)
             } catch (error) {
                 console.log(error)
@@ -42,6 +42,7 @@ function PollDetails(){
         <>
             <Link to="/">← Back to Polls</Link>
             <h1>{poll.title}</h1>
+            <h2>{poll.description}</h2>
             <ul style={{ listStyle: 'none', padding: 0 }}>
                 {poll.options.map((option) => (
                     <li key={option.id}>

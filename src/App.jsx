@@ -5,6 +5,7 @@ import Results from './pages/Results'
 import ViewPoll from './pages/ViewPoll'
 import NotFound from './pages/NotFound'
 import CreatePollForm from './pages/CreatePoll'
+import NavBar from './components/NavBar'
 import axios from 'axios'
 import './App.css'
 
@@ -12,6 +13,7 @@ function App() {
 
   return (
     <>
+      <NavBar />
       <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/results/:id' element={<Results/>}/>
