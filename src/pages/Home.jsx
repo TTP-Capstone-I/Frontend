@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate } from 'react-router'
+import PollCard from '../components/PollCard'
 import axios from 'axios'
 
 function Home() {
@@ -10,7 +11,6 @@ function Home() {
 
     // URL later from Render when we deploy.
     const URL = import.meta.env.VITE_API_URL
-    console.log(URL)
 
     useEffect(() => {
         async function getPolls() {
@@ -42,11 +42,11 @@ function Home() {
 
     return (
         <>
+        <h1> Polling App </h1>
+        <h2> Polls: </h2>
             {polls.map((poll) => {
                 return (
-                    <div key={poll.id}> 
-                        Poll: {poll.title}
-                    </div>
+                    <PollCard key={poll.id} poll={poll} ></PollCard>
                 )
             })}
         </>
