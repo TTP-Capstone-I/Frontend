@@ -16,7 +16,7 @@ function CreatePollForm(){
     }
 
     function addNewOption(event) {
-        event.preventDefault()       
+        // event.preventDefault()   // This isn't really needed here     
         setOptions((prev) => {
             return [...prev, {
                 title: ""
@@ -25,7 +25,11 @@ function CreatePollForm(){
     } 
 
     function deleteOption(event, index) {
-        event.preventDefault()      
+        // event.preventDefault()    // This isn't really needed here
+        if (IsMinOptions()) {
+            return  // Don't allow the user to delete if theres only two options.
+        } 
+
         const updatedOptions = options.filter((option, i) => {
             return i !== index
         })
@@ -62,6 +66,11 @@ function CreatePollForm(){
     function IsMaxOptions() {
         return (options.length >= 5 ? true : false)
     }
+
+    function IsMinOptions() {
+        console.log(options.length <= 2 ? true : false)
+        return (options.length <= 2 ? true : false)
+    }
  
     return (
         <>
@@ -78,7 +87,7 @@ function CreatePollForm(){
                 <br/>
 
                 {options.map((option, index) => {
-                    return <OptionCard index={index} inputFunc={handleOptionInput} removeFunc={deleteOption} key={index}/>
+                    return <OptionCard disableRemove={IsMinOptions()} index={index} inputFunc={handleOptionInput} removeFunc={deleteOption} key={index}/>
                 })}
 
                 <button disabled={IsMaxOptions()} onClick={(event) => addNewOption(event)}> + Add Option </button>
