@@ -91,73 +91,47 @@ function PollDetails() {
     if (!poll) return <p> Poll not found </p>
 
     console.log(poll)
-    // return (
-    //     <>
-    //         <Link to="/">← Back to Polls</Link>
-    //         <h1>{poll.title}</h1>
-    //         <h2>{poll.description}</h2>
-    //         <ul style={{ listStyle: 'none', padding: 0 }}>
-    //             {poll.options.map((option) => (
-    //                 <li key={option.id}>
-    //                     <button
-    //                         onClick={() => handleSelect(option.id)}
-    //                         style={{
-    //                             border: option.id === selectedOption
-    //                                 ? '2px solid dodgerblue'
-    //                                 : '1px solid gray'
-    //                         }}
-    //                     >
-    //                         {option.title}
-    //                     </button>
-    //                 </li>
-    //             ))}
-    //         </ul>
-    //         <button 
-    //             onClick={handleVote} 
-    //             disabled={!selectedOption || submitting}
-    //             style={{
-    //                 padding: '4px 10px',
-    //                 fontSize: '0.85rem',
-    //                 alignSelf: 'center'
-    //             }}
-    //         >
-    //             {submitting ? 'Submitting...' : 'Vote'}
-    //         </button>
-                
-    //     </>
-    // )
+
     return (
-    <div className="page-wrapper">
-        <div className="card">
-            <div className="card-header">
-                <h1>{poll.title}</h1>
-            </div>
-            <div className="card-body">
-                <p>{poll.description}</p>
-                {poll.options.map((option) => (
+        <div className="page-wrapper">
+            <div className="card">
+                <div className="card-header">
+                    <h1>{poll.title}</h1>
+                </div>
+                <div className="card-body">
+                    <p>{poll.description}</p>
+                    {poll.options.map((option) => (
+                        <button
+                            key={option.id}
+                            disabled={hasVoted || submitting}
+                            className={`option-bar ${option.id === selectedOption ? 'selected' : ''}`}
+                            onClick={() => handleSelect(option.id)}
+                        >
+                            {option.title}
+                        </button>
+                    ))}
                     <button
-                        key={option.id}
-                        className={`option-bar ${option.id === selectedOption ? 'selected' : ''}`}
-                        onClick={() => handleSelect(option.id)}
+                        className="vote-button"
+                        onClick={handleVote}
+                        disabled={!selectedOption || submitting}
                     >
-                        {option.title}
+                        {submitting ? 'Submitting...' : 'Vote'}
                     </button>
-                ))}
-                <button
-                    className="vote-button"
-                    onClick={handleVote}
-                    disabled={!selectedOption || submitting}
-                >
-                    {submitting ? 'Submitting...' : 'Vote'}
-                </button>
-                {submitError && <p>Error: {submitError.message}</p>}
-            </div>
-            <div className="card-footer">
-                <Link to="/">← Back to Polls</Link>
+                    {submitError && <p>Error: {submitError.message}</p>}
+                </div>
+
+                {hasVoted && (
+                    <div className="card-body">
+                        <h2> You already voted on this poll. </h2>
+                        <Link to={`/results/${poll.id}`}> View Results → </Link>
+                    </div>  
+                )}
+                <div className="card-footer">
+                    <Link to="/">← Back to Polls </Link>
+                </div>
             </div>
         </div>
-    </div>
-)
+    )
 }
 
 export default PollDetails
