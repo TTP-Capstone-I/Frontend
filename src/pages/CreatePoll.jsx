@@ -57,7 +57,9 @@ function CreatePollForm(){
             throw new Error("Failed to load polls:", response.status)
         }
         setCreatingPoll(false)
-        navigate(`/polls/${response.data.id}`)
+        const createdPoll = response.data
+        localStorage.setItem(`pollOwner:${createdPoll.id}`, createdPoll.ownerToken)
+        navigate(`/polls/${createdPoll.id}`)
     }
 
     function addNewOption(event) {

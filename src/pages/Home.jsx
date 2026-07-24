@@ -49,14 +49,23 @@ function Home() {
         setDeleteError('')
         setDeletingPollId(poll.id)
 
+        const ownerToken = localStorage.getItem(`pollOwner:${poll.id}`);
+        if (!ownerToken) {
+            setDeleteError("You do not own this poll.");
+            return;
+        }
+
         try {
-            await axios.delete(URL + `/polls/${poll.id}`)
+            await axios.delete(URL + `/polls/${poll.id}`, {
+                headers: {"x-owner-token": ownerToken}
+            })
+            localStorage.removeItem(`pollOwner:${poll.id}`);
             setPolls((currentPolls) => currentPolls.filter((item) => item.id !== poll.id))
         } catch (error) {
             console.error(error)
             setDeleteError(
                 error.response?.data?.message ||
-                'The poll could not be deleted. Check that the backend supports DELETE /polls/:id.'
+                "You are not authorized to delete this poll."
             )
         } finally {
             setDeletingPollId(null)
