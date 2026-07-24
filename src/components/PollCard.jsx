@@ -5,7 +5,10 @@ function PollCard(props) {
     const poll = props.poll
     const onDelete = props.onDelete
     const isDeleting = props.isDeleting
+    const ownerToken = localStorage.getItem(`pollOwner:${poll.id}`);
+    const isOwner = ownerToken !== null;
     const hasVoted = localStorage.getItem(`votedPoll${poll.id}`) !== null
+    
     console.log(poll)
 
     function handleClick() {
@@ -24,13 +27,13 @@ function PollCard(props) {
                 {poll.description && <p>{poll.description}</p>}
             </div>
             <div className="poll-card-actions">
-                <button
+                {isOwner && (<button
                     className="delete-poll-button"
                     onClick={() => onDelete(poll)}
                     disabled={isDeleting}
                 >
                     {isDeleting ? 'Deleting...' : 'Delete'}
-                </button>
+                </button>)}
                 <button className="view-poll-button" onClick={handleClick} disabled={isDeleting}>
                     View poll <span aria-hidden="true">→</span>
                 </button>
