@@ -2,10 +2,9 @@ import { Link } from 'react-router'
 
 function NavBar() {
     return (
-        <nav>
-            <Link to="/">Polls</Link>
-            {' | '}
-            <Link to="/create-poll">Create</Link>
+        <nav className="nav-bar">
+            <Link to="/" className="nav-button">Polls</Link>
+            <Link to="/create-poll" className="nav-button">Create</Link>
         </nav>
     )
 }

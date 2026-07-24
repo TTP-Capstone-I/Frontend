@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react'
-import { Link, Routes, Route, useNavigate, useParams } from 'react-router'
+import { Link, useParams } from 'react-router'
 import ResultsCard from '../components/ResultsCard'
 import axios from 'axios'
 
-function Results(props) {
+function Results() {
     const [poll, setPoll] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
 
     const params = useParams()
-    const navigate = useNavigate()
-
     // URL later from Render when we deploy.
     const URL = import.meta.env.VITE_API_URL
     const pollId = Number(params.id)
@@ -54,16 +52,32 @@ function Results(props) {
     const totalVotes = calculateTotalVotes()
 
     return (
-        <>
-            <Link to="/">← Back to Polls </Link>
-            <h2> Title: {poll.title} </h2>
-            <h3> Description: {poll.description} </h3>
-            {poll.options.map((option) => {
-                return (
-                    <ResultsCard key={option.id} option={option} totalVotes={totalVotes} > </ResultsCard>
-                )
-            })}
-        </>
+        <main className="page-wrapper results-page">
+            <section className="card results-card">
+                <header className="card-header results-header">
+                    <span className="results-label">Poll results</span>
+                    <h1>{poll.title}</h1>
+                    <p>{poll.description}</p>
+                </header>
+
+                <div className="card-body results-body">
+                    <div className="results-summary">
+                        <h2>Current standings</h2>
+                        <span>{totalVotes} {totalVotes === 1 ? 'vote' : 'votes'} total</span>
+                    </div>
+
+                    <div className="results-list">
+                        {poll.options.map((option) => (
+                            <ResultsCard key={option.id} option={option} totalVotes={totalVotes} />
+                        ))}
+                    </div>
+                </div>
+
+                <footer className="card-footer results-footer">
+                    <Link to="/">← Back to Polls</Link>
+                </footer>
+            </section>
+        </main>
     )
 }
 
