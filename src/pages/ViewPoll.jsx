@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link, useNavigate} from 'react-router'
+import { useParams, Link, useNavigate } from 'react-router'
 import axios from 'axios'
 
-function PollDetails(){
+function PollDetails() {
     const { id } = useParams()
+    const voteStorageKey = `votedPoll${id}`
     const [poll, setPoll] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [ error, setError ] = useState('')
-    const [ selectedOption, setSelectedOption ] = useState(null)
+    const [error, setError] = useState('')
+    const [selectedOption, setSelectedOption] = useState(null)
     const [submitting, setSubmitting] = useState(false)
     const [submitError, setSubmitError] = useState('')
+
+    // Checks the local storage to see if an entry for this specific poll exists to tell if someone has voted or not.
+    const [hasVoted, setHasVoted] = useState(() => {
+        return localStorage.getItem(voteStorageKey) !== null
+    })
     const navigate = useNavigate()
 
     const URL = import.meta.env.VITE_API_URL
@@ -17,13 +23,13 @@ function PollDetails(){
     useEffect(() => {
         async function getPoll() {
             try {
-                const response = await axios.get(URL+`/polls/${id}?include=true`)
+                const response = await axios.get(URL + `/polls/${id}?include=true`)
                 if (!response || !response.data) {
-                    throw new Error("Failed to load poll")
+                    throw new Error("Failed to get poll")
                 }
                 const data = await response.data
                 if (!data) {
-                    throw new Error("Failed to get polls")
+                    throw new Error("Failed to get poll")
                 }
                 setPoll(response.data)
             } catch (error) {
@@ -38,26 +44,44 @@ function PollDetails(){
         getPoll()
     }, [id])
 
-    function handleSelect(optionId){
+    function handleSelect(optionId) {
         setSelectedOption(optionId)
     }
 
-    async function handleVote(){
-        if (!selectedOption) return
+    async function handleVote(event) {
+        if (!selectedOption || submitting)  {
+            return
+        }
+
+        // Check localStorage again to see if its value has changed
+        if (localStorage.getItem(voteStorageKey) !== null) {
+            setHasVoted(true)
+            return
+        }
+
         setSubmitting(true)
-        setSubmitting('')
-        try{
-            const response = await axios.post(URL + `/votes` , {
-                optionId : selectedOption
+        setSubmitError('')
+
+        try {
+            const response = await axios.post(URL + `/votes`, {
+                optionId: selectedOption
             })
-            if(!response){
+            if (!response || !response.data) {
                 throw new Error("Failed to add vote!", response.status)
             }
+
+            // If vote was successful add it to localStorage
+            localStorage.setItem(
+                voteStorageKey,         // A string like: `votedPoll${id}`
+                String(selectedOption)  // A string of the optionId
+            )
+            
+            setHasVoted(true)
             navigate(`/results/${poll.id}`)
-        }catch(error){
+        } catch (error) {
             console.log(error)
             setSubmitError(error)
-        }finally{
+        } finally {
             setSubmitting(false)
         }
     }
@@ -65,16 +89,19 @@ function PollDetails(){
     if (loading) return <p> Loading Poll...</p>
     if (error) return <p> Error: {error.message}</p>
     if (!poll) return <p> Poll not found </p>
+
     console.log(poll)
+
     return (
         <>
-            <Link to="/">← Back to Polls</Link>
-            <h1>Title: {poll.title}</h1>
-            <h3>Description: {poll.description}</h3>
+            <Link to="/"> ← Back to Polls</Link>
+            <h1> Title: {poll.title} </h1>
+            <h3> Description: {poll.description} </h3>
             <ul style={{ listStyle: 'none', padding: 0 }}>
                 {poll.options.map((option) => (
                     <li key={option.id}>
                         <button
+                            disabled={(hasVoted || submitting)}
                             onClick={() => handleSelect(option.id)}
                             style={{
                                 border: option.id === selectedOption
@@ -87,9 +114,9 @@ function PollDetails(){
                     </li>
                 ))}
             </ul>
-            <button 
-                onClick={handleVote} 
-                disabled={!selectedOption || submitting}
+            <button
+                onClick={handleVote}
+                disabled={!selectedOption || submitting || hasVoted}
                 style={{
                     padding: '4px 10px',
                     fontSize: '0.85rem',
@@ -98,7 +125,14 @@ function PollDetails(){
             >
                 {submitting ? 'Submitting...' : 'Vote'}
             </button>
-                
+
+            {hasVoted && (
+              <div>
+                <p> You have already voted on this poll. </p>
+                <Link to={`/results/${poll.id}`}> View Results </Link>
+              </div>  
+            )}
+
         </>
     )
 }
