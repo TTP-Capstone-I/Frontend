@@ -188,6 +188,31 @@ code {
   transform: translateY(-1px);
 }
 
+.already-voted .option-bar {
+  border-color: #e5e1ed;
+  background: #f1eff5;
+  color: #9994a4;
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.already-voted .option-bar:hover {
+  border-color: #e5e1ed;
+  background: #f1eff5;
+  transform: none;
+}
+
+.options-locked-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: -2px 0 12px;
+  color: #918b9d;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
 .option-bar.selected {
   background: var(--accent);
   color: #fff;
@@ -217,6 +242,73 @@ code {
 
 .vote-button:hover:not(:disabled) {
   background: var(--accent-hover);
+}
+
+.already-voted .vote-button:disabled {
+  background: #ded9e9;
+  color: #8d8797;
+}
+
+.already-voted-notice {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 13px;
+  margin-top: 22px;
+  padding: 16px;
+  border: 1px solid #dcd6f2;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f5f2ff, #faf9ff);
+}
+
+.voted-check {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-weight: 800;
+}
+
+.already-voted-notice h2 {
+  margin: 0 0 2px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.already-voted-notice p {
+  color: var(--text);
+  font-size: 12px;
+}
+
+.view-results-button {
+  padding: 9px 12px;
+  border-radius: 9px;
+  background: var(--accent);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.view-results-button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 520px) {
+  .already-voted-notice {
+    grid-template-columns: auto 1fr;
+  }
+
+  .view-results-button {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
 }
 
 .card-footer {
@@ -387,6 +479,18 @@ code {
   font-size: 17px;
 }
 
+.home-heading h1 {
+  margin-bottom: 14px;
+}
+
+.home-heading p {
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
 /* Polling app page */
 .poll-list,
 .create-card {
@@ -485,6 +589,29 @@ code {
   margin: 0 0 3px;
   color: var(--text-h);
   font-size: 17px;
+}
+
+.poll-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.poll-title-row h3 {
+  margin: 0;
+}
+
+.voted-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
 }
 
 .poll-card-content p {

@@ -98,7 +98,7 @@ function PollDetails() {
                 <div className="card-header">
                     <h1>{poll.title}</h1>
                 </div>
-                <div className="card-body">
+                <div className={`card-body ${hasVoted ? 'already-voted' : ''}`}>
                     <p>{poll.description}</p>
                     {poll.options.map((option) => (
                         <button
@@ -113,19 +113,24 @@ function PollDetails() {
                     <button
                         className="vote-button"
                         onClick={handleVote}
-                        disabled={!selectedOption || submitting}
+                        disabled={hasVoted || !selectedOption || submitting}
                     >
-                        {submitting ? 'Submitting...' : 'Vote'}
+                        {hasVoted ? 'Already voted' : submitting ? 'Submitting...' : 'Vote'}
                     </button>
                     {submitError && <p>Error: {submitError.message}</p>}
+                    {hasVoted && (
+                        <div className="already-voted-notice">
+                            <div className="voted-check" aria-hidden="true">✓</div>
+                            <div>
+                                <h2>You already voted on this poll.</h2>
+                                <p>Your response has been recorded.</p>
+                            </div>
+                            <Link className="view-results-button" to={`/results/${poll.id}`}>
+                                View Results <span aria-hidden="true">→</span>
+                            </Link>
+                        </div>
+                    )}
                 </div>
-
-                {hasVoted && (
-                    <div className="card-body">
-                        <h2> You already voted on this poll. </h2>
-                        <Link to={`/results/${poll.id}`}> View Results → </Link>
-                    </div>  
-                )}
                 <div className="card-footer">
                     <Link to="/">← Back to Polls </Link>
                 </div>
@@ -135,4 +140,3 @@ function PollDetails() {
 }
 
 export default PollDetails
-
