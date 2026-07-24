@@ -1,6 +1,3 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router'
-
 function OptionCard(props) {
     const inputFunc = props.inputFunc
     const removeFunc = props.removeFunc
@@ -9,11 +6,19 @@ function OptionCard(props) {
     //console.log(props)
 
     return (
-        <>
-            <input onChange={(event) => inputFunc(event, index)} placeholder={`Option ${index+1}`}></input>
-            <button disabled={disableRemove} onClick={(event) => removeFunc(event, index)}> Remove </button>
-            <br/>
-        </>
+        <div className="option-input-row">
+            <span className="option-number">{index + 1}</span>
+            <input onChange={(event) => inputFunc(event, index)} placeholder={`Option ${index + 1}`} />
+            <button
+                className="remove-option-button"
+                type="button"
+                disabled={disableRemove}
+                onClick={(event) => removeFunc(event, index)}
+                aria-label={`Remove option ${index + 1}`}
+            >
+                ×
+            </button>
+        </div>
     )
 }
 

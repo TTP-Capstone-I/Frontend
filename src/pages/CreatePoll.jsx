@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useParams, Link, Navigate, useNavigate } from 'react-router'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router'
 import OptionCard from '../components/OptionCard'
 import axios from 'axios'
 
@@ -119,34 +119,55 @@ function CreatePollForm(){
     }
  
     return (
-        <>
-            <Link to="/"> ← Back to Polls </Link>
-            <form onSubmit={(event) => handleSubmit(event)}> 
-                <h1> Create a New Poll </h1>
+        <main className="content-page create-page">
+            <div className="page-heading">
+                <span className="eyebrow">New Poll</span>
+                <h1>Create a New Poll</h1>
+            </div>
 
-                <input onChange={(event) => handleTitleInput(event)} placeholder='Title' />
-                <br/>
-                <input onChange={(event) => handleDescInput(event)} placeholder='Description' />
+            <form className="create-card" onSubmit={handleSubmit}>
+                <div className="form-section">
+                    <label htmlFor="poll-title">Poll title</label>
+                    <input id="poll-title" onChange={handleTitleInput} placeholder="What would you like to ask?" />
 
-                <p> - Options - </p>
-                <br/>
+                    <label htmlFor="poll-description">Description</label>
+                    <textarea id="poll-description" onChange={handleDescInput} placeholder="Add a little more context" rows="3" />
+                </div>
 
-                {options.map((option, index) => {
-                    return <OptionCard disableRemove={IsMinOptions()} index={index} inputFunc={handleOptionInput} removeFunc={deleteOption} key={index}/>
-                })}
+                <div className="form-divider" />
 
-                <button disabled={IsMaxOptions()} onClick={(event) => addNewOption(event)}> + Add Option </button>
-                <br/>
-                <button onClick={(event) => handleSubmit(event)}> Create Poll </button>
+                <div className="form-section">
+                    <div className="options-heading">
+                        <div>
+                            <h2>Answer options</h2>
+                            <p>Add between 2 and 5 choices.</p>
+                        </div>
+                        <span>{options.length}/5</span>
+                    </div>
 
-                <p hidden={(msg.length === 0)} style={{color: 'red'}}> 
-                    {msg} 
-                </p>
-                <p hidden={!creatingPoll}> Creating Poll... </p>
+                    <div className="option-inputs">
+                        {options.map((option, index) => (
+                            <OptionCard disableRemove={IsMinOptions()} index={index} inputFunc={handleOptionInput} removeFunc={deleteOption} key={index}/>
+                        ))}
+                    </div>
+
+                    <button className="add-option-button" type="button" disabled={IsMaxOptions()} onClick={addNewOption}>
+                        + Add another option
+                    </button>
+                </div>
+
+                {msg && <p className="form-message error-message">{msg}</p>}
+                {creatingPoll && <p className="form-message">Creating your poll...</p>}
+
+                <div className="form-actions">
+                    <Link className="cancel-link" to="/">Cancel</Link>
+                    <button className="create-poll-button" type="submit" disabled={creatingPoll}>
+                        {creatingPoll ? 'Creating...' : 'Create poll'}
+                    </button>
+                </div>
             </form>
-        </>
+        </main>
     )
 }
 
 export default CreatePollForm
-
