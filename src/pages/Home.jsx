@@ -65,9 +65,9 @@ function Home() {
 
     return (
         <main className="content-page">
-            <div className="page-heading">
-                <span className="eyebrow">Choose a poll below or create a poll.</span>
+            <div className="page-heading home-heading">
                 <h1>Polling App</h1>
+                <p>Choose a poll below or create a new one.</p>
             </div>
 
             <section className="poll-list" aria-labelledby="poll-list-heading">

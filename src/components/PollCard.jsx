@@ -5,6 +5,7 @@ function PollCard(props) {
     const poll = props.poll
     const onDelete = props.onDelete
     const isDeleting = props.isDeleting
+    const hasVoted = localStorage.getItem(`votedPoll${poll.id}`) !== null
     console.log(poll)
 
     function handleClick() {
@@ -16,7 +17,10 @@ function PollCard(props) {
         <article className="poll-card">
             <div className="poll-card-icon" aria-hidden="true">✓</div>
             <div className="poll-card-content">
-                <h3>{poll.title}</h3>
+                <div className="poll-title-row">
+                    <h3>{poll.title}</h3>
+                    {hasVoted && <span className="voted-badge">✓ Already voted</span>}
+                </div>
                 {poll.description && <p>{poll.description}</p>}
             </div>
             <div className="poll-card-actions">
