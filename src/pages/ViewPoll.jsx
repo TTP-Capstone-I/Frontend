@@ -89,8 +89,6 @@ function PollDetails() {
     if (error) return <p> Error: {error.message}</p>
     if (!poll) return <p> Poll not found </p>
 
-    console.log(poll.options)
-
     return (
         <div className="page-wrapper">
             <div className="card">
