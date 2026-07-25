@@ -9,18 +9,13 @@ function PollCard(props) {
     const isOwner = ownerToken !== null;
     const hasVoted = localStorage.getItem(`votedPoll${poll.id}`) !== null
 
-    function handleClick() {
-        navigate(`/polls/${poll.id}`)
-        //useNavigate(`/polls/${poll.id}`)
-    }
-
     return (
         <article className="poll-card">
             <div className={hasVoted ? "poll-card-icon-voted" : "poll-card-icon"} aria-hidden="true">✓</div>
             <div className="poll-card-content">
                 <div className="poll-title-row">
                     <h3>{poll.title}</h3>
-                    {hasVoted && <span className="voted-badge">✓ Already voted</span>}
+                    {hasVoted && <span className="voted-badge">✓ Already Voted</span>}
                 </div>
                 {poll.description && <p>{poll.description}</p>}
             </div>
@@ -32,9 +27,15 @@ function PollCard(props) {
                 >
                     {isDeleting ? 'Deleting...' : 'Delete'}
                 </button>)}
-                <button className="view-poll-button" onClick={handleClick} disabled={isDeleting}>
-                    View Poll <span aria-hidden="true">→</span>
-                </button>
+                {hasVoted ? (
+                    <button className="view-results-button" onClick={() => navigate(`/results/${poll.id}`)} disabled={isDeleting}>
+                        View Results <span aria-hidden="true">→</span>
+                    </button>
+                ) : (
+                    <button className="view-poll-button" onClick={() => navigate(`/polls/${poll.id}`)} disabled={isDeleting}>
+                        View Poll <span aria-hidden="true">→</span>
+                    </button>
+                )}
             </div>
         </article>
     )
