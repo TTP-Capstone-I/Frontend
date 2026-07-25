@@ -585,6 +585,17 @@ code {
   font-weight: 800;
 }
 
+.poll-card-icon-voted {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--accent);
+  color: white;
+  font-weight: 800;
+}
+
 .poll-card-content h3 {
   margin: 0 0 3px;
   color: var(--text-h);
@@ -856,6 +867,18 @@ code {
 .create-poll-button:disabled {
   cursor: wait;
   opacity: 0.65;
+}
+
+.search-polls {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--code-bg);
+  color: var(--text-h);
+  font-size: 15px;
+  text-align: left;
+  box-sizing: border-box;
+  margin-left: auto;
 }
 
 @media (max-width: 640px) {
