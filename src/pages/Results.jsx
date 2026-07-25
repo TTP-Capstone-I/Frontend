@@ -38,8 +38,6 @@ function Results() {
     if (loading) return <p> Loading Poll... </p>
     if (error) return <p> Error: {error.message} </p>
 
-    console.log(poll)
-
     function calculateTotalVotes() {
         let result = 0
         poll.options.map((option) => {
@@ -61,12 +59,12 @@ function Results() {
 
                 <div className="card-body results-body">
                     <div className="results-summary">
-                        <h2>Current standings</h2>
-                        <span>{totalVotes} {totalVotes === 1 ? 'vote' : 'votes'} total</span>
+                        <h2>Current Results</h2>
+                        <span>{totalVotes} Total {totalVotes === 1 ? 'Vote' : 'Votes'} </span>
                     </div>
 
                     <div className="results-list">
-                        {poll.options.map((option) => (
+                        {poll.options.sort((a, b) => a.id - b.id).map((option) => (
                             <ResultsCard key={option.id} option={option} totalVotes={totalVotes} />
                         ))}
                     </div>

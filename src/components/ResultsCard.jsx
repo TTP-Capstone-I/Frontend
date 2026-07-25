@@ -26,7 +26,7 @@ function ResultsCard(props) {
             >
                 <span style={{ width: `${percent}%` }} />
             </div>
-            <p>{option.votes.length} {option.votes.length === 1 ? 'vote' : 'votes'}</p>
+            <p>{option.votes.length} {option.votes.length === 1 ? 'Vote' : 'Votes'}</p>
         </article>
     )
 }

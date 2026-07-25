@@ -283,8 +283,9 @@ code {
   font-size: 12px;
 }
 
-.view-results-button {
+/* .view-results-button {
   padding: 9px 12px;
+  border: 1px solid #dcd6f2;
   border-radius: 9px;
   background: var(--accent);
   color: white;
@@ -293,7 +294,7 @@ code {
   text-decoration: none;
   white-space: nowrap;
   transition: background 0.2s, transform 0.2s;
-}
+} */
 
 .view-results-button:hover {
   background: var(--accent-hover);
@@ -563,7 +564,7 @@ code {
   gap: 16px;
   padding: 18px;
   background: var(--code-bg);
-  border: 1px solid transparent;
+  border: 1px solid #00000007;
   border-radius: 13px;
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
@@ -630,16 +631,42 @@ code {
   font-size: 14px;
 }
 
-.view-poll-button {
-  padding: 9px 13px;
+.view-poll-button,
+.view-results-button {
+  width: 120px;
+  padding: 6px 12px;
+  box-sizing: border-box;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
   border: 1px solid #dcd6f2;
   border-radius: 9px;
-  background: white;
-  color: var(--accent);
   cursor: pointer;
   font: inherit;
-  font-size: 14px;
-  font-weight: 650;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.view-poll-button {
+  background: white;
+  color: var(--accent);
+}
+
+.view-results-button {
+  background: var(--accent);
+  color: white;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.view-poll-button:hover {
+  background: #efecfb;
+  border-color: #ddd7f2;
+  transform: translateY(-1px);
 }
 
 .poll-card-actions {
@@ -649,7 +676,7 @@ code {
 }
 
 .delete-poll-button {
-  padding: 9px 12px;
+  padding: 8px 12px;
   border: 1px solid transparent;
   border-radius: 9px;
   background: transparent;

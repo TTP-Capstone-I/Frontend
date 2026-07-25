@@ -89,6 +89,8 @@ function PollDetails() {
     if (error) return <p> Error: {error.message}</p>
     if (!poll) return <p> Poll not found </p>
 
+    console.log(poll.options)
+
     return (
         <div className="page-wrapper">
             <div className="card">
@@ -97,7 +99,7 @@ function PollDetails() {
                 </div>
                 <div className={`card-body ${hasVoted ? 'already-voted' : ''}`}>
                     <p>{poll.description}</p>
-                    {poll.options.map((option) => (
+                    {poll.options.sort((a, b) => a.id - b.id).map((option) => (
                         <button
                             key={option.id}
                             disabled={hasVoted || submitting}
