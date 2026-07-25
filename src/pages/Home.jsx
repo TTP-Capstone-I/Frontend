@@ -40,7 +40,7 @@ function Home() {
     if (loading) return <p> Loading Polls... </p>
     if (error) return <p> Error: {error.message} </p>
 
-    console.log(polls)
+    // console.log(polls)
 
     async function handleDeletePoll(poll) {
         const confirmed = window.confirm(`Delete "${poll.title}"? This cannot be undone.`)
@@ -82,11 +82,11 @@ function Home() {
             <section className="poll-list" aria-labelledby="poll-list-heading">
                 <div className="section-heading">
                     <div>
-                        <h2 id="poll-list-heading">Available polls</h2>
-                        <p>{polls.length} {polls.length === 1 ? 'poll' : 'polls'} ready for you</p>
+                        <h2 id="poll-list-heading">Available Polls</h2>
+                        <p>{polls.length} {polls.length === 1 ? 'Poll' : 'Polls'} ready for you</p>
                     </div>
                     <button className="create-shortcut" onClick={() => navigate('/create-poll')}>
-                        + New poll
+                        + New Poll
                     </button>
                 </div>
 

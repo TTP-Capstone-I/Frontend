@@ -8,8 +8,6 @@ function PollCard(props) {
     const ownerToken = localStorage.getItem(`pollOwner:${poll.id}`);
     const isOwner = ownerToken !== null;
     const hasVoted = localStorage.getItem(`votedPoll${poll.id}`) !== null
-    
-    console.log(poll)
 
     function handleClick() {
         navigate(`/polls/${poll.id}`)
@@ -35,7 +33,7 @@ function PollCard(props) {
                     {isDeleting ? 'Deleting...' : 'Delete'}
                 </button>)}
                 <button className="view-poll-button" onClick={handleClick} disabled={isDeleting}>
-                    View poll <span aria-hidden="true">→</span>
+                    View Poll <span aria-hidden="true">→</span>
                 </button>
             </div>
         </article>
