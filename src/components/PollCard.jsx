@@ -16,7 +16,7 @@ function PollCard(props) {
 
     return (
         <article className="poll-card">
-            <div className="poll-card-icon" aria-hidden="true">✓</div>
+            <div className={hasVoted ? "poll-card-icon-voted" : "poll-card-icon"} aria-hidden="true">✓</div>
             <div className="poll-card-content">
                 <div className="poll-title-row">
                     <h3>{poll.title}</h3>

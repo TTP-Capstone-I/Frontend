@@ -585,6 +585,17 @@ code {
   font-weight: 800;
 }
 
+.poll-card-icon-voted {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--accent);
+  color: white;
+  font-weight: 800;
+}
+
 .poll-card-content h3 {
   margin: 0 0 3px;
   color: var(--text-h);
