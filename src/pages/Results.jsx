@@ -9,9 +9,8 @@ function Results() {
     const [error, setError] = useState('')
 
     const params = useParams()
-    // URL later from Render when we deploy.
-    const URL = import.meta.env.VITE_API_URL
     const pollId = Number(params.id)
+    const URL = import.meta.env.VITE_API_URL
 
     useEffect(() => {
         async function getPoll() {

@@ -17,7 +17,6 @@ function PollDetails() {
         return localStorage.getItem(voteStorageKey) !== null
     })
     const navigate = useNavigate()
-
     const URL = import.meta.env.VITE_API_URL
 
     useEffect(() => {
@@ -89,8 +88,6 @@ function PollDetails() {
     if (loading) return <p> Loading Poll...</p>
     if (error) return <p> Error: {error.message}</p>
     if (!poll) return <p> Poll not found </p>
-
-    console.log(poll)
 
     return (
         <div className="page-wrapper">

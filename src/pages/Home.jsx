@@ -9,9 +9,9 @@ function Home() {
     const [error, setError] = useState('')
     const [deleteError, setDeleteError] = useState('')
     const [deletingPollId, setDeletingPollId] = useState(null)
+    const [searchTerm, setSearchTerm] = useState('')
+    
     const navigate = useNavigate()
-
-    // URL later from Render when we deploy.
     const URL = import.meta.env.VITE_API_URL
 
     useEffect(() => {
@@ -72,6 +72,15 @@ function Home() {
         }
     }
 
+    function handleSearch(e) {
+        const searchTerm = e.target.value.toLowerCase()
+        setSearchTerm(searchTerm)
+    }
+
+    const filteredPolls = polls.filter((poll) => {
+        return poll.title.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+
     return (
         <main className="content-page">
             <div className="page-heading home-heading">
@@ -83,25 +92,27 @@ function Home() {
                 <div className="section-heading">
                     <div>
                         <h2 id="poll-list-heading">Available Polls</h2>
-                        <p>{polls.length} {polls.length === 1 ? 'Poll' : 'Polls'} ready for you</p>
+                        <p>{filteredPolls.length} {filteredPolls.length === 1 ? 'Poll' : 'Polls'} ready for you</p>
                     </div>
+                    <input className="search-polls" onChange={(e) => handleSearch(e)} placeholder="Search Polls..." />
                     <button className="create-shortcut" onClick={() => navigate('/create-poll')}>
                         + New Poll
                     </button>
                 </div>
 
                 <div className="poll-grid">
-                    {polls.map((poll) => (
+                    {filteredPolls.map((poll) => (
                         <PollCard
                             key={poll.id}
                             poll={poll}
+                            hidden={poll.hidden}
                             onDelete={handleDeletePoll}
                             isDeleting={deletingPollId === poll.id}
                         />
                     ))}
-                    {polls.length === 0 && (
+                    {filteredPolls.length === 0 && (
                         <div className="empty-polls">
-                            <h3>No polls yet</h3>
+                            <h3>No Polls Found</h3>
                             <p>Create your first poll to get started.</p>
                         </div>
                     )}
