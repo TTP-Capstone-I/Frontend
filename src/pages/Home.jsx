@@ -10,6 +10,7 @@ function Home() {
     const [deleteError, setDeleteError] = useState('')
     const [deletingPollId, setDeletingPollId] = useState(null)
     const [searchTerm, setSearchTerm] = useState('')
+    const [sortBy, setSortBy] = useState("popular")
     
     const navigate = useNavigate()
     const URL = import.meta.env.VITE_API_URL
@@ -72,6 +73,12 @@ function Home() {
         }
     }
 
+    function getTotalVotes(poll) {
+        return poll.options.reduce((total, option) => {
+            return total + (option.votes?.length || 0)
+        }, 0)
+    }
+
     function handleSearch(e) {
         const searchTerm = e.target.value.toLowerCase()
         setSearchTerm(searchTerm)
@@ -80,6 +87,26 @@ function Home() {
     const filteredPolls = polls.filter((poll) => {
         return poll.title.toLowerCase().includes(searchTerm.toLowerCase());
     });
+
+    const displayedPolls = [...filteredPolls].sort((a, b) => {
+        if (sortBy === "popular") {
+            return getTotalVotes(b) - getTotalVotes(a)
+        }
+        if (sortBy === "latest") {
+            return new Date(b.createdAt) - new Date(a.createdAt)
+        }
+        if (sortBy === "oldest") {
+            return new Date(a.createdAt) - new Date(b.createdAt)
+        }
+        if (sortBy === "alphabetical") {
+            return a.title.localeCompare(b.title)
+        }
+        if (sortBy === "reverse-alphabetical") {
+            return b.title.localeCompare(a.title)
+        }
+        // Default: Popular
+        return getTotalVotes(b) - getTotalVotes(a)
+    })
 
     return (
         <main className="content-page">
@@ -94,14 +121,25 @@ function Home() {
                         <h2 id="poll-list-heading">Available Polls</h2>
                         <p>{filteredPolls.length} {filteredPolls.length === 1 ? 'Poll' : 'Polls'} ready for you</p>
                     </div>
-                    <input className="search-polls" onChange={(e) => handleSearch(e)} placeholder="Search Polls..." />
-                    <button className="create-shortcut" onClick={() => navigate('/create-poll')}>
-                        + New Poll
-                    </button>
+                    <div className='poll-controls'>
+                        <select className="sort-polls" value={sortBy} onChange={(event) => setSortBy(event.target.value)} aria-label="Sort polls">
+                            <option value="popular">Top Voted</option>
+                            <option value="latest">Latest</option>
+                            <option value="oldest">Oldest</option>
+                            <option value="alphabetical">A–Z</option>
+                            <option value="reverse-alphabetical">Z–A</option>
+                        </select>
+
+                        <input className="search-polls" onChange={(e) => handleSearch(e)} placeholder="Search Polls..." />
+                        <button className="create-shortcut" onClick={() => navigate('/create-poll')}>
+                            + New Poll
+                        </button>
+                    </div>
+                
                 </div>
 
                 <div className="poll-grid">
-                    {filteredPolls.map((poll) => (
+                    {displayedPolls.map((poll) => (
                         <PollCard
                             key={poll.id}
                             poll={poll}
@@ -110,10 +148,10 @@ function Home() {
                             isDeleting={deletingPollId === poll.id}
                         />
                     ))}
-                    {filteredPolls.length === 0 && (
+                    {displayedPolls.length === 0 && (
                         <div className="empty-polls">
                             <h3>No Polls Found</h3>
-                            <p>Create your first poll to get started.</p>
+                            <p>Try a different search term.</p>
                         </div>
                     )}
                 </div>

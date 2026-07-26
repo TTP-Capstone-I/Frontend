@@ -47,12 +47,14 @@ function Results() {
     }
 
     const totalVotes = calculateTotalVotes()
+    const votedOptionId = Number(localStorage.getItem(`votedPoll${pollId}`))
+
 
     return (
         <main className="page-wrapper results-page">
             <section className="card results-card">
                 <header className="card-header results-header">
-                    <span className="results-label">Poll results</span>
+                    <span className="results-label">Poll Results</span>
                     <h1>{poll.title}</h1>
                     <p>{poll.description}</p>
                 </header>
@@ -65,7 +67,7 @@ function Results() {
 
                     <div className="results-list">
                         {poll.options.sort((a, b) => a.id - b.id).map((option) => (
-                            <ResultsCard key={option.id} option={option} totalVotes={totalVotes} />
+                            <ResultsCard key={option.id} option={option} totalVotes={totalVotes} isUserVote={option.id === votedOptionId} />
                         ))}
                     </div>
                 </div>

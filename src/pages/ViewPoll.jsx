@@ -93,6 +93,7 @@ function PollDetails() {
         <div className="page-wrapper">
             <div className="card">
                 <div className="card-header">
+                    <span className="results-label">Vote on this Poll</span>
                     <h1>{poll.title}</h1>
                 </div>
                 <div className={`card-body ${hasVoted ? 'already-voted' : ''}`}>
