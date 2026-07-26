@@ -919,6 +919,25 @@ code {
   white-space: nowrap;
 }
 
+.sort-polls {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--code-bg);
+  color: var(--text-h);
+  font: inherit;
+  font-size: 14px;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.poll-controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+}
+
 @media (max-width: 640px) {
   .content-page {
     padding: 38px 16px 54px;
