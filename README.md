@@ -18,7 +18,7 @@ This app is full-stack web application where users can create polls, vote on ava
 
 | Environment | URL |
 | --- | --- |
-| Frontend (Vercel) | [Vercel App](https://frontend-dylanreaves.vercel.app/) |
+| Frontend (Vercel) | [Vercel App](https://polling-f6lc2lsb7-dylanreaves.vercel.app) |
 | Backend API (Render) | [Backend API](https://backend-7j1j.onrender.com) |
 
 ## Repo Links
