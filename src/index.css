@@ -908,6 +908,17 @@ code {
   margin-left: auto;
 }
 
+.your-vote-badge {
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
 @media (max-width: 640px) {
   .content-page {
     padding: 38px 16px 54px;

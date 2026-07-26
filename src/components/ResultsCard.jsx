@@ -1,6 +1,7 @@
 function ResultsCard(props) {
     const option = props.option
     const totalVotes = props.totalVotes
+    const isUserVote = props.isUserVote
 
     function calculateProgressPercent() {
         const voteAmount = option.votes.length
@@ -14,6 +15,13 @@ function ResultsCard(props) {
         <article className="result-item">
             <div className="result-item-heading">
                 <h3>{option.title}</h3>
+
+                {isUserVote && (
+                    <span className="your-vote-badge">
+                        ✓ Your Vote
+                    </span>
+                )}
+
                 <span>{Math.round(percent)}%</span>
             </div>
             <div
