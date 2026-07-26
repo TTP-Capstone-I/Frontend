@@ -22,7 +22,7 @@ function PollDetails() {
     useEffect(() => {
         async function getPoll() {
             try {
-                const response = await axios.get(URL + `/polls/${id}?include=true`)
+                const response = await axios.get(URL + `/polls/${id}`)
                 if (!response || !response.data) {
                     throw new Error("Failed to get poll")
                 }
