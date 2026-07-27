@@ -1,15 +1,3 @@
-<!--
-HOW TO USE THIS TEMPLATE
-1. This becomes your FRONTEND repo's README.md — the front door of your project.
-   Copy everything below the line into that README.md.
-2. Replace every [bracket] with your own answer.
-3. Delete the italic hints once a section is filled in.
-4. The goal is a README a NEW developer could read and run your project without asking you anything.
-5. Due Monday, 10:00 AM. The poll app is used as the running example throughout.
--->
-
----
-
 # Polling App
 
 This app is full-stack web application where users can create polls, vote on available options and view the results. It was built as a team capstone project to practice developing and deploying a complete PERN-stack application. 
